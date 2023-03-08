@@ -1,0 +1,8 @@
+name: 'NDK Version'
+description: 'Outputs the version of the current Android NDK at Cricut'
+outputs:
+  version: 
+    description: 'the version output'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
