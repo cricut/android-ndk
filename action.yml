@@ -3,6 +3,7 @@ description: 'Outputs the version of the current Android NDK at Cricut'
 outputs:
   version: 
     description: 'the version output'
+    value: 21.4.7075529
 runs:
   using: 'docker'
   image: 'Dockerfile'
