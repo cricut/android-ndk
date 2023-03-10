@@ -14,7 +14,7 @@ The current NDK version used by the Android team at Cricut.
       uses: cricut/android-ndk@main 
 
     - name: Get the output
-      run: echo "The version is ${{ steps.ndk.output.version }}"
+      run: echo "The version is ${{ steps.ndk.outputs.version }}"
 
 
 If you need the Android Pods to update the current NDK Version to make your library
