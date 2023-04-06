@@ -1,3 +1,3 @@
 #!/bin/sh -l 
 
-echo version=21.4.7075529 >> $GITHUB_OUTPUT
+echo version=25.1.8937393 >> $GITHUB_OUTPUT
