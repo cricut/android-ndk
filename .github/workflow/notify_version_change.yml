@@ -33,3 +33,17 @@ jobs:
             \"inputs\": { \
               \"version\": \"${{ steps.version.outputs.NEW_VERSION }}\" \
             }"
+
+      - name: Notify Android OOB
+        run: |
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: Bearer ${{ secrets.PLAYGROUND_A_SECRET }}" \
+          https://api.github.com/repos/cricut/android-oob-cut-interaction/actions/workflows/update_ndk.yml/dispatches \
+          -d "{ \
+            \"ref\":\"master\", \
+            \"inputs\": { \
+              \"version\": \"${{ steps.version.outputs.NEW_VERSION }}\" \
+            }"
+
