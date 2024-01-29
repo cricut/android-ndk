@@ -29,7 +29,7 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.CRICUT_GPR_TOKEN }}" \
           https://api.github.com/repos/cricut/Foundation/actions/workflows/update_ndk.yml/dispatches \
           -d "{ \
-            \"ref\":\"main\", \
+            \"ref\":\"master\", \
             \"inputs\": { \
               \"version\": \"${{ steps.version.outputs.NEW_VERSION }}\" \
             }"
