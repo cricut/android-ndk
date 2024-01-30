@@ -1,0 +1,87 @@
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - 'entrypoint.sh'
+
+jobs:
+  update_ndk_version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: parse version
+        run: ./.github/scripts/ParseVersion.main.kts
+        id: version
+
+      - name: log
+        run: echo $("Version = ${{ steps.version.outputs.NEW_VERSION }}")
+
+      - name: Notify Foundation
+        run: |
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: Bearer ${{ secrets.CRICUT_GPR_TOKEN }}" \
+          https://api.github.com/repos/cricut/Foundation/actions/workflows/update_ndk.yml/dispatches \
+          -d "{ \
+            \"ref\":\"master\", \
+            \"inputs\": { \
+              \"version\": \"${{ steps.version.outputs.NEW_VERSION }}\" \
+            }"
+
+      - name: Notify Android OOB
+        run: |
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: Bearer ${{ secrets.PLAYGROUND_A_SECRET }}" \
+          https://api.github.com/repos/cricut/android-oob-cut-interaction/actions/workflows/update_ndk.yml/dispatches \
+          -d "{ \
+            \"ref\":\"master\", \
+            \"inputs\": { \
+              \"version\": \"${{ steps.version.outputs.NEW_VERSION }}\" \
+            }"
+
+      - name: Notify Android Path Operations
+        run: |
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: Bearer ${{ secrets.PLAYGROUND_A_SECRET }}" \
+          https://api.github.com/repos/cricut/android-path-operations/actions/workflows/update_ndk.yml/dispatches \
+          -d "{ \
+            \"ref\":\"master\", \
+            \"inputs\": { \
+              \"version\": \"${{ steps.version.outputs.NEW_VERSION }}\" \
+            }"
+
+      - name: Notify Android Bridge Com
+        run: |
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: Bearer ${{ secrets.PLAYGROUND_A_SECRET }}" \
+          https://api.github.com/repos/cricut/android-bridge-com/actions/workflows/update_ndk.yml/dispatches \
+          -d "{ \
+            \"ref\":\"master\", \
+            \"inputs\": { \
+              \"version\": \"${{ steps.version.outputs.NEW_VERSION }}\" \
+            }"
+
+      - name: Notify Android Text Freestack
+        run: |
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: Bearer ${{ secrets.PLAYGROUND_A_SECRET }}" \
+          https://api.github.com/repos/cricut/android-text-freestack/actions/workflows/update_ndk.yml/dispatches \
+          -d "{ \
+            \"ref\":\"main\", \
+            \"inputs\": { \
+              \"version\": \"${{ steps.version.outputs.NEW_VERSION }}\" \
+            }"
